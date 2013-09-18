@@ -15,8 +15,8 @@ function action($emails, $src_ip, $type, $evidence) {
     return $results;
 }
 
-function get_netflow($command) {
-    $results = shell_exec($command); //exeCute 
+function get_tracert($command) {
+    $results = trim(shell_exec($command)); //exeCute 
     $data = str_to_array($results);
     return $data;
 }
@@ -26,8 +26,9 @@ function str_to_array($str) {
     $lines = explode("\r\n", $str);
     if (sizeof($lines) == 1)
         $lines = explode("\n", $str);
-    for ($i = 1; $i < sizeof($lines) - 4; $i++) {
-        $elements[] = explode(',', $lines[$i]);
+    for ($i = 1; $i < sizeof($lines); $i++) {
+         $tmp = explode(" ", trim($lines[$i]));
+         $elements[] = trim($tmp[2]);
     }
     if (sizeof($elements) > 0)
         return $elements;
