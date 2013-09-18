@@ -14,7 +14,7 @@ foreach ($targets as $name => $target) {
     }
     else
         $routes[$name] = get_tracert($command);
-    $pre_hash = implode(' ',$route[$name]);
+    $pre_hash = implode(' ',$routes[$name]);
     $hashes[$name] = md5($pre_hash);
     
 }
