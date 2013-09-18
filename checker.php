@@ -58,6 +58,7 @@ foreach ($targets as $name => $target) {
             $routes[$name] = $new_routes[$name];
         }
     } else {    //add new hash and route to db
+        echo "[+] Added route to $name\n";
         $hashes[$name] = $hash;
         $routes[$name] = $new_routes[$name];
     }
