@@ -50,7 +50,7 @@ foreach ($targets as $name => $target) {
             echo "$new_route\n";
 
             if (!$debug) {
-                $body ="Old route: \n$old_route\n\nNew route:$new_route\n";
+                $body ="Old route:\n$old_route\n\nNew route:\n$new_route\n";
                 action($emails, $name, $body);
             }
 
