@@ -64,7 +64,6 @@ foreach ($targets as $name => $target) {
     }
 }
 
-
 //Save suspects to json
 if (save_json($db_file, $routes))
     echo "[+] Routes saved\n";
