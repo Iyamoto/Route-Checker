@@ -43,12 +43,17 @@ foreach ($targets as $name => $target) {
         else {
             echo "[-] Route $name is changed\n";
             echo "[i] Old route:\n";
-            $old_route = implode("\n",$routes[$name]);
+            $old_route = implode("\n", $routes[$name]);
             echo "$old_route\n";
             echo "[i] New route:\n";
-            $new_route = implode("\n",$new_routes[$name]);
+            $new_route = implode("\n", $new_routes[$name]);
             echo "$new_route\n";
-            
+
+            if (!$debug) {
+                $body ="Старый маршрут: \n$old_route\n\nНовый маршрут:$new_route\n";
+                action($emails, $name, $body);
+            }
+
             $hashes[$name] = $hash;
             $routes[$name] = $new_routes[$name];
         }

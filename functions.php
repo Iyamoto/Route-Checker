@@ -5,10 +5,8 @@
  */
 mb_internal_encoding("UTF-8");
 
-function action($emails, $src_ip, $type, $evidence) {
-    $subject = "Detected evil IP: $src_ip";
-    $text = implode("\n", $evidence);
-    $body = $type . "\n" . $text;
+function action($emails, $name, $body) {
+    $subject = "Сменился маршрут к $name";
     foreach ($emails as $email) {
         $results[] = mail($email, $subject, $body);
     }
