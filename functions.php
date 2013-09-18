@@ -6,7 +6,7 @@
 mb_internal_encoding("UTF-8");
 
 function action($emails, $name, $body) {
-    $subject = "Сменился маршрут к $name";
+    $subject = "Route changed: $name";
     foreach ($emails as $email) {
         $results[] = mail($email, $subject, $body);
     }
@@ -37,7 +37,6 @@ function str_to_array($str) {
 function save_json($fn, $data) {
     $json = json_encode($data);
     $gz = gzcompress($json);
-    //var_dump(strlen($json), strlen($gz));
     return file_put_contents($fn, $gz);
 }
 

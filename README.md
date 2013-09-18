@@ -1,7 +1,7 @@
 bot-template
 ============
 What does the bot do?
-Check routes
+Check routes and mail changes
 
 Install
 =======
