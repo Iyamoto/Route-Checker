@@ -68,35 +68,4 @@ function read_db_from_file($filename) {
     }
 }
 
-function check_whitelist($ip, &$whitelist) {
-    foreach ($whitelist as $white_ip) {
-        if ($ip == $white_ip)
-            return true;
-    }
-    return false;
-}
-
-function get_lastmodified_file($dir) {
-    $files = array();
-    if ($handle = opendir($dir)) {
-        while (false !== ($file = readdir($handle))) {
-            if ($file != "." && $file != "..") {
-                $files[filemtime($dir . DIRECTORY_SEPARATOR . $file)] = $file;
-            }
-        }
-        closedir($handle);
-        ksort($files);
-        $reallyLastModified = end($files);
-        return $reallyLastModified;
-    }
-    else
-        return false;
-}
-
-//Load from html template 
-function load_from_template($filename) {
-    $html = file_get_contents($filename);
-    return $html;
-}
-
 ?>
