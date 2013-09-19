@@ -53,8 +53,12 @@ foreach ($targets as $name => $target) {
             $new_route = implode("\n", $new_routes[$name]);
             echo "$new_route\n";
 
+            $ping_result = check_availability($target, $ping);
+            
             if (!$debug) {
-                $body = "Old route:\n$old_route\n\nNew route:\n$new_route\n";
+                $body = "Old route:\n$old_route\n
+New route:\n$new_route\n
+$ping_result";
                 action($emails, $name, $body);
             }
 

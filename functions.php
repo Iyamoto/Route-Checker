@@ -25,8 +25,8 @@ function str_to_array($str) {
     if (sizeof($lines) == 1)
         $lines = explode("\n", $str);
     for ($i = 1; $i < sizeof($lines); $i++) {
-         $tmp = explode(" ", trim($lines[$i]));
-         $elements[] = trim($tmp[2]);
+        $tmp = explode(" ", trim($lines[$i]));
+        $elements[] = trim($tmp[2]);
     }
     if (sizeof($elements) > 0)
         return $elements;
@@ -63,6 +63,12 @@ function read_db_from_file($filename) {
         echo "[-] $filename not found\n";
         return false;
     }
+}
+
+function check_availability($ip,$ping){
+    $command = $ping .'  -c 4 '. $ip;
+    $result = shell_exec($command);
+    return $result;
 }
 
 ?>
