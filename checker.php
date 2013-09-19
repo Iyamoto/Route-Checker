@@ -4,7 +4,7 @@
  * Project description
  */
 $exec_time = microtime(true);
-require_once 'config.php';
+require_once 'config.php';//TODO check config
 echo "\n[+] Started\n";
 
 //Read routes
