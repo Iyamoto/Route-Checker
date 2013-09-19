@@ -9,6 +9,7 @@
 $emails[] = 'root@localhost'; //Whom to report
 $db_dir = '/tmp/routechecker';//Where to put data files
 $traceroute = '/usr/sbin/traceroute'; //which traceroute
+$ping = '/bin/ping';//which ping
 
 //Targets for traceroute
 $targets['server1'] = '10.10.10.10';
