@@ -1,10 +1,11 @@
 <?php
 
 /*
- * Functions for PHP-NetFlow project
+ * Functions for Route-Checker project
  */
 mb_internal_encoding("UTF-8");
 
+//Sends mail
 function action($emails, $name, $body) {
     $subject = "Route changed: $name";
     foreach ($emails as $email) {
@@ -13,12 +14,14 @@ function action($emails, $name, $body) {
     return $results;
 }
 
+//Wrapper for traceroute
 function get_tracert($command) {
     $results = trim(shell_exec($command)); //exeCute 
     $data = str_to_array($results);
     return $data;
 }
 
+//Helper function, converts traceroute output to array
 function str_to_array($str) {
     $str = trim($str);
     $lines = explode("\r\n", $str);
@@ -34,12 +37,14 @@ function str_to_array($str) {
         return false;
 }
 
+//Compress and save json data to file
 function save_json($fn, $data) {
     $json = json_encode($data);
     $gz = gzcompress($json);
     return file_put_contents($fn, $gz);
 }
 
+//Load and decompress from file to json array
 function load_json($fn) {
     $gz = file_get_contents($fn);
     if ($gz) {
@@ -52,6 +57,7 @@ function load_json($fn) {
     }
 }
 
+//Helper, load data from file
 function read_db_from_file($filename) {
     if (file_exists($filename)) {
         $json = load_json($filename);
@@ -65,8 +71,10 @@ function read_db_from_file($filename) {
     }
 }
 
-function check_availability($ip,$ping){
-    $command = $ping .'  -c 4 '. $ip;
+//Ping (send 4 icmp type 8 packets) IP and return result
+//TODO check result for % loss
+function check_availability($ip, $ping) {
+    $command = $ping . '  -c 4 ' . $ip;
     $result = shell_exec($command);
     return $result;
 }

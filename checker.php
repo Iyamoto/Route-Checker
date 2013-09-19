@@ -1,11 +1,15 @@
 <?php
 
 /*
- * Project description
+ * Checks trace routes and report changes to email
  */
 $exec_time = microtime(true);
-require_once 'config.php'; //TODO check config
 echo "\n[+] Started\n";
+
+if (file_exists('config.php'))
+    require_once 'config.php';
+else
+    exit("[-] Rename sample-config.php to config.php\n");
 
 //Read routes
 $routes = read_db_from_file($db_file);
@@ -27,7 +31,7 @@ if ($hashes) {
     unset($hashes);
 }
 
-
+//Cycle throw targets ip
 foreach ($targets as $name => $target) {
     $command = $traceroute . ' ' . $target;
     if ($debug)
@@ -40,12 +44,14 @@ foreach ($targets as $name => $target) {
     }
     else
         $pre_hash = implode(' ', $new_routes[$name]);
+    
     $hash = md5($pre_hash);
-    if (isset($hashes[$name])) {
-        if ($hashes[$name] == $hash)
-            echo "[+] Route $name is stable\n";
+
+    if (isset($hashes[$name])) { //Got route in the db?
+        if ($hashes[$name] == $hash) //Compare route from the db with new route
+            echo "[+] Route to $name is stable\n";
         else {
-            echo "[-] Route $name is changed\n";
+            echo "[-] Route to $name is changed\n";
             echo "[i] Old route:\n";
             $old_route = implode("\n", $routes[$name]);
             echo "$old_route\n";
@@ -54,13 +60,15 @@ foreach ($targets as $name => $target) {
             echo "$new_route\n";
 
             $ping_result = check_availability($target, $ping);
-            
+
             if (!$debug) {
                 $body = "Old route:\n$old_route\n
 New route:\n$new_route\n
 $ping_result";
-                action($emails, $name, $body);
+                action($emails, $name, $body);//send mail
             }
+            else
+                var_dump($body);
 
             $hashes[$name] = $hash;
             $routes[$name] = $new_routes[$name];

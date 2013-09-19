@@ -3,6 +3,9 @@
 /*
  * Example config file for the project
  * Rename to config.php
+ *  Must be edit variables:
+ *  $emails
+ *  $targets
  */
 
 //Manual config
@@ -17,7 +20,7 @@ $targets['router1'] = '10.10.10.1';
 
 //Internal configuration
 require_once 'functions.php';
-$today = date("Y-m-d");
+
 if (!is_dir($db_dir))
     mkdir($db_dir);
 $db_file = $db_dir . DIRECTORY_SEPARATOR . 'data.gz';

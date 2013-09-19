@@ -17,8 +17,3 @@ Usage
 =====
 Starts automatically every 15 min. from crontab, just check your email and investigate route changes 
 
-Data structures
-===============
-
-Design
-======
