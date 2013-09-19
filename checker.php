@@ -4,7 +4,7 @@
  * Project description
  */
 $exec_time = microtime(true);
-require_once 'config.php';//TODO check config
+require_once 'config.php'; //TODO check config
 echo "\n[+] Started\n";
 
 //Read routes
@@ -16,7 +16,7 @@ if ($routes) {
     echo "[-] Problem with $db_file file\n";
     unset($routes);
 }
-//FIXME add helper function
+//FIXME replace this crap with a helper function?
 //Read hashes
 $hashes = read_db_from_file($hash_file);
 if ($hashes) {
@@ -30,12 +30,16 @@ if ($hashes) {
 
 foreach ($targets as $name => $target) {
     $command = $traceroute . ' ' . $target;
-    if ($debug) {
+    if ($debug)
         $new_routes[$name] = str_to_array($test_results);
-    }
     else
         $new_routes[$name] = get_tracert($command);
-    $pre_hash = implode(' ', $new_routes[$name]);
+    if ($skip_first_host) {
+        $tmp = array_slice($new_routes[$name], 1);
+        $pre_hash = implode(' ', $tmp);
+    }
+    else
+        $pre_hash = implode(' ', $new_routes[$name]);
     $hash = md5($pre_hash);
     if (isset($hashes[$name])) {
         if ($hashes[$name] == $hash)
@@ -50,7 +54,7 @@ foreach ($targets as $name => $target) {
             echo "$new_route\n";
 
             if (!$debug) {
-                $body ="Old route:\n$old_route\n\nNew route:\n$new_route\n";
+                $body = "Old route:\n$old_route\n\nNew route:\n$new_route\n";
                 action($emails, $name, $body);
             }
 
@@ -64,7 +68,7 @@ foreach ($targets as $name => $target) {
     }
 }
 
-//Save suspects to json
+//Save data to json
 if (save_json($db_file, $routes))
     echo "[+] Routes saved\n";
 if (save_json($hash_file, $hashes))
