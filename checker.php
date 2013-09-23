@@ -66,7 +66,7 @@ foreach ($targets as $name => $target) {
                 $body = "Old route:\n$old_route\n
 New route:\n$new_route\n
 $ping_result";
-                //action($emails, $name, $body);//send mail
+                action($emails, $name, $body);//send mail
             }
             else
                 var_dump($body);
