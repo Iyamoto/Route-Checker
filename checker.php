@@ -40,11 +40,12 @@ foreach ($targets as $name => $target) {
         $new_routes[$name] = get_tracert($command);
     if ($skip_first_host) {
         $tmp = array_slice($new_routes[$name], 1);
-        $pre_hash = implode(' ', $tmp);
+        $pre_hash = implode('', $tmp);
     }
     else
-        $pre_hash = implode(' ', $new_routes[$name]);
+        $pre_hash = implode('', $new_routes[$name]);
     
+    $pre_hash = preg_replace('|\*+|', '*', $pre_hash);
     $hash = md5($pre_hash);
 
     if (isset($hashes[$name])) { //Got route in the db?
@@ -65,7 +66,7 @@ foreach ($targets as $name => $target) {
                 $body = "Old route:\n$old_route\n
 New route:\n$new_route\n
 $ping_result";
-                action($emails, $name, $body);//send mail
+                //action($emails, $name, $body);//send mail
             }
             else
                 var_dump($body);
